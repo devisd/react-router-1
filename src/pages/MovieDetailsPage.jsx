@@ -1,7 +1,9 @@
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { fetchOnMovieDetails } from '../services/movies-api';
+
+const Loader = lazy(() => import('../components/Loader/Loader'));
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -16,7 +18,12 @@ const MovieDetailsPage = () => {
 
   return (
     <>
-      <Link to={goBack}>Go back</Link>
+      <Link
+        to={goBack}
+        // state={{ from: location.state.from.search }}
+      >
+        Go back
+      </Link>
       <Link to={'/'}>Go Homepage</Link>
 
       {movie && (
@@ -49,7 +56,7 @@ const MovieDetailsPage = () => {
         </div>
       )}
       <hr />
-      <Suspense fallback={<h3>Loading content ...</h3>}>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
     </>

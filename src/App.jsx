@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 const Layout = lazy(() =>
   import('./components/Layout/Layout' /* webpackChunkName: "layout" */)
 );
+
 const HomePage = lazy(() =>
   import('./pages/HomePage' /* webpackChunkName: "home-page" */)
 );
@@ -25,10 +26,14 @@ const ReviewsPage = lazy(() =>
   import('./pages/ReviewsPage' /* webpackChunkName: "reviews-page" */)
 );
 
+const Loader = lazy(() =>
+  import('./components/Loader/Loader' /* webpackChunkName: "loader" */)
+);
+
 function App() {
   return (
     <>
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />

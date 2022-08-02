@@ -1,11 +1,9 @@
 import { useState, useEffect, lazy } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import SearchForm from 'components/SearchForm';
-// import Loader from 'components/Loader';
 import { fetchOnSearchMovies } from '../services/movies-api';
 
-const SearchForm = lazy(() => import('../components/SearchForm'));
-// const Loader = lazy(() => import('../components/Loader'));
+const SearchForm = lazy(() => import('../components/SearchForm/SearchForm'));
+const Loader = lazy(() => import('../components/Loader/Loader'));
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState(null);
@@ -23,7 +21,6 @@ const MoviesPage = () => {
       fetchOnSearchMovies(searchQuery).then(result => {
         setMovies(result);
         setStatus('resolved');
-        console.log(result);
       });
       window.scrollTo({
         top: document.documentElement.scrollHeight,
@@ -43,7 +40,7 @@ const MoviesPage = () => {
     <>
       <SearchForm movieQuery={searchQuery} onSubmit={handleInputChange} />
       {status === 'idle' && <h2>Enter movie title to search</h2>}
-      {status === 'pending' && <h2>Loading...</h2>}
+      {status === 'pending' && <Loader />}
       <ul>
         {status === 'resolved' &&
           movies.map(movie => (

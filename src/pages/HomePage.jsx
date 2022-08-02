@@ -10,8 +10,6 @@ const HomePage = () => {
     fetchOnTrending().then(setMovies);
   }, []);
 
-  console.log('location ->', location);
-
   return (
     <>
       <h1>Trends of the week</h1>
